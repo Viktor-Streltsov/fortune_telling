@@ -1,26 +1,31 @@
 @use '../../styles/variables' as *;
 
 .page {
-  min-height: 100dvh;
+  position: relative;
+  z-index: 1;
+  min-height: min(100dvh, 100svh);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: clamp(1.25rem, 4vw, 2.5rem);
+  padding: max(1.25rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(1.25rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
   text-align: center;
-  position: relative;
-  overflow: hidden;
+  max-width: 28rem;
+  margin-inline: auto;
+  width: 100%;
 }
 
 .glow {
   position: absolute;
-  inset: -20%;
-  background: radial-gradient(circle at 50% 30%, rgb(180 120 255 / 18%), transparent 55%);
+  inset: -25%;
+  background: radial-gradient(circle at 50% 35%, rgb(180 120 255 / 16%), transparent 55%);
   pointer-events: none;
-  animation: pulse 8s ease-in-out infinite;
+  z-index: 0;
+  animation: glowPulse 10s ease-in-out infinite;
 }
 
-@keyframes pulse {
+@keyframes glowPulse {
   0%,
   100% {
     opacity: 0.85;
@@ -28,46 +33,55 @@
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow {
+    animation: none;
   }
 }
 
 .header {
   position: relative;
-  max-width: 26rem;
-  margin-bottom: 1.75rem;
+  z-index: 1;
+  margin-bottom: 1.5rem;
 }
 
 .kicker {
-  margin: 0 0 0.35rem;
-  font-size: 0.78rem;
+  margin: 0 0 0.5rem;
+  font-size: $font-size-caption;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
 .title {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.85rem;
   font-family: $font-display;
-  font-size: clamp(1.85rem, 6vw, 2.5rem);
+  font-size: clamp(1.75rem, 6vw, 2.35rem);
   font-weight: 600;
   line-height: 1.15;
+  color: var(--color-text);
 }
 
 .lead {
   margin: 0;
-  font-size: 0.98rem;
-  color: $text-muted;
+  font-size: $font-size-small;
+  color: var(--color-text-muted);
   line-height: 1.55;
 }
 
 .cta {
   position: relative;
-  padding: 0.85rem 2.25rem;
+  z-index: 1;
+  min-height: $touch-min;
+  padding: 0.85rem 2rem;
   border: none;
   border-radius: 999px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: var(--color-btn-on-gradient);
   background: var(--gradient-btn-intro);
   box-shadow: var(--shadow-card);
@@ -77,8 +91,7 @@
 }
 
 .cta:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.04);
+  filter: brightness(1.03);
 }
 
 .cta:focus-visible {
@@ -88,7 +101,8 @@
 
 .note {
   position: relative;
-  margin: 2rem 0 0;
+  z-index: 1;
+  margin: 1.75rem 0 0;
   max-width: 22rem;
   font-size: 0.78rem;
   line-height: 1.45;

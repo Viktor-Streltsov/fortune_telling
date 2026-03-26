@@ -42,7 +42,8 @@
 .primary,
 .secondary {
   flex: 1;
-  min-width: 140px;
+  min-width: min(100%, 160px);
+  min-height: $touch-min;
   padding: 0.65rem 1rem;
   border-radius: 10px;
   font-weight: 600;

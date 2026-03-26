@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mystic Cards</string>
+    <string name="title_activity_main">Mystic Cards</string>
+    <string name="package_name">com.mysticcards.fortune</string>
+    <string name="custom_url_scheme">com.mysticcards.fortune</string>
+</resources>

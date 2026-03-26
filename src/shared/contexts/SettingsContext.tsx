@@ -7,14 +7,12 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { STORAGE_KEYS } from '@/shared/lib/storageKeys';
 import type { Locale, ThemeId } from '@/shared/types';
-
-const STORAGE_LOCALE = 'fortune-locale';
-const STORAGE_THEME = 'fortune-theme';
 
 function readLocale(): Locale {
   try {
-    const v = globalThis.localStorage?.getItem(STORAGE_LOCALE);
+    const v = globalThis.localStorage?.getItem(STORAGE_KEYS.locale);
     if (v === 'ru' || v === 'en') return v;
   } catch {
     /* ignore */
@@ -24,7 +22,7 @@ function readLocale(): Locale {
 
 function readTheme(): ThemeId {
   try {
-    const v = globalThis.localStorage?.getItem(STORAGE_THEME);
+    const v = globalThis.localStorage?.getItem(STORAGE_KEYS.theme);
     if (v === 'witch' || v === 'light' || v === 'dark') return v;
   } catch {
     /* ignore */
@@ -32,11 +30,24 @@ function readTheme(): ThemeId {
   return 'witch';
 }
 
+function readSoundEnabled(): boolean {
+  try {
+    const v = globalThis.localStorage?.getItem(STORAGE_KEYS.sound);
+    if (v === '0') return false;
+    if (v === '1') return true;
+  } catch {
+    /* ignore */
+  }
+  return true;
+}
+
 type SettingsContextValue = {
   locale: Locale;
   theme: ThemeId;
+  soundEnabled: boolean;
   setLocale: (l: Locale) => void;
   setTheme: (t: ThemeId) => void;
+  setSoundEnabled: (on: boolean) => void;
 };
 
 const SettingsContext = createContext<SettingsContextValue | null>(null);
@@ -44,6 +55,7 @@ const SettingsContext = createContext<SettingsContextValue | null>(null);
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(readLocale);
   const [theme, setThemeState] = useState<ThemeId>(readTheme);
+  const [soundEnabled, setSoundEnabledState] = useState(readSoundEnabled);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -54,7 +66,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const setLocale = useCallback((l: Locale) => {
     setLocaleState(l);
     try {
-      globalThis.localStorage?.setItem(STORAGE_LOCALE, l);
+      globalThis.localStorage?.setItem(STORAGE_KEYS.locale, l);
     } catch {
       /* ignore */
     }
@@ -63,15 +75,31 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const setTheme = useCallback((t: ThemeId) => {
     setThemeState(t);
     try {
-      globalThis.localStorage?.setItem(STORAGE_THEME, t);
+      globalThis.localStorage?.setItem(STORAGE_KEYS.theme, t);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const setSoundEnabled = useCallback((on: boolean) => {
+    setSoundEnabledState(on);
+    try {
+      globalThis.localStorage?.setItem(STORAGE_KEYS.sound, on ? '1' : '0');
     } catch {
       /* ignore */
     }
   }, []);
 
   const value = useMemo<SettingsContextValue>(
-    () => ({ locale, theme, setLocale, setTheme }),
-    [locale, theme, setLocale, setTheme]
+    () => ({
+      locale,
+      theme,
+      soundEnabled,
+      setLocale,
+      setTheme,
+      setSoundEnabled,
+    }),
+    [locale, theme, soundEnabled, setLocale, setTheme, setSoundEnabled]
   );
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;

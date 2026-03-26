@@ -1,0 +1,265 @@
+@use '../../styles/variables' as *;
+
+$sheet-radius: 20px;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background: rgb(8 6 18 / 55%);
+  backdrop-filter: blur(6px);
+}
+
+.sheetContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  pointer-events: none;
+}
+
+.sheetContainerDesktop {
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.panel {
+  pointer-events: auto;
+  width: 100%;
+  max-height: min(92dvh, 92vh);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.panelInner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.sheetInner {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.panelSheet {
+  border-radius: $sheet-radius $sheet-radius 0 0;
+  border-bottom: none;
+  max-width: 100%;
+}
+
+.panelModal {
+  max-width: 420px;
+  border-radius: $radius-card;
+  width: 100%;
+}
+
+.handleWrap {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0.65rem 0 0.35rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.handleWrap:active {
+  cursor: grabbing;
+}
+
+.handle {
+  width: 40px;
+  height: 5px;
+  border-radius: 99px;
+  background: var(--color-border);
+  opacity: 0.85;
+}
+
+.head {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.35rem 1rem 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.headTitle {
+  margin: 0;
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: $touch-min;
+  min-height: $touch-min;
+  margin: -0.25rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 12px;
+  color: var(--color-text-muted);
+  background: transparent;
+  transition:
+    color $transition-fast,
+    background $transition-fast,
+    transform $transition-fast;
+}
+
+.closeBtn:hover {
+  color: var(--color-text);
+  background: rgb(255 255 255 / 6%);
+}
+
+.closeBtn:active {
+  transform: scale(0.96);
+}
+
+.closeBtn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.closeIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 1rem 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.sectionIcon {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.1rem;
+  color: var(--color-accent);
+  opacity: 0.95;
+}
+
+.sectionTitles {
+  min-width: 0;
+}
+
+.sectionLabel {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.sectionHint {
+  margin: 0.2rem 0 0;
+  font-size: $font-size-small;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
+.segment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border-radius: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.segBtn {
+  min-height: $touch-min;
+  padding: 0.4rem 0.75rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: transparent;
+  transition:
+    color $transition-fast,
+    background $transition-fast,
+    transform $transition-fast;
+}
+
+.segBtn:hover {
+  color: var(--color-text);
+}
+
+.segBtn:active {
+  transform: scale(0.98);
+}
+
+.segBtnActive {
+  color: var(--color-btn-on-gradient);
+  background: var(--gradient-btn);
+}
+
+.segBtn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (min-width: 641px) {
+  .head {
+    padding-top: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .segBtn:active {
+    transform: none;
+  }
+
+  .closeBtn:active {
+    transform: none;
+  }
+}

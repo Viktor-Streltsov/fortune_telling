@@ -1,3 +1,19 @@
 .shell {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   min-height: 100dvh;
+  min-height: 100svh;
+  padding-inline: max(0.75rem, env(safe-area-inset-left));
+  padding-inline-end: max(0.75rem, env(safe-area-inset-right));
+  padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
+}
+
+/* Space for fixed settings gear (top-right) */
+.shellMain {
+  padding-top: calc(env(safe-area-inset-top) + 3.15rem);
+  padding-inline-end: max(3.75rem, env(safe-area-inset-right));
 }

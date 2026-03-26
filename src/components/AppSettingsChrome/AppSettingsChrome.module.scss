@@ -1,0 +1,55 @@
+@use '../../styles/variables' as *;
+
+.wrap {
+  position: fixed;
+  top: max(0.5rem, env(safe-area-inset-top));
+  right: max(0.5rem, env(safe-area-inset-right));
+  z-index: 50;
+  pointer-events: none;
+}
+
+.gear {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: $touch-min;
+  min-height: $touch-min;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-card);
+  transition:
+    color $transition-fast,
+    background $transition-fast,
+    transform $transition-fast,
+    border-color $transition-fast;
+}
+
+.gear:hover {
+  color: var(--color-text);
+  background: rgb(255 255 255 / 8%);
+}
+
+.gear:active {
+  transform: scale(0.96);
+}
+
+.gear:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.gearIcon {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gear:active {
+    transform: none;
+  }
+}

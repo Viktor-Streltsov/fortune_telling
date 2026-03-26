@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import { CardDeck } from '@/components/CardDeck/CardDeck';
 import { CardList } from '@/components/CardList/CardList';
 import { ResultScreen } from '@/components/ResultScreen/ResultScreen';
 import { useFortune } from '@/features/fortune-reading/FortuneContext';
 import { useSettings } from '@/shared/contexts/SettingsContext';
 import { useDrawSound } from '@/shared/hooks/useDrawSound';
+import { hapticLight } from '@/shared/native/haptics';
 import { t } from '@/shared/i18n/messages';
 import styles from './ReadingPage.module.scss';
 
 export function ReadingPage() {
   const navigate = useNavigate();
+  const reduceMotion = useReducedMotion();
   const { locale } = useSettings();
   const m = t(locale);
   const { play } = useDrawSound();
@@ -46,6 +49,7 @@ export function ReadingPage() {
 
   const handleDraw = () => {
     play();
+    void hapticLight();
     drawCards();
   };
 
@@ -59,9 +63,18 @@ export function ReadingPage() {
   };
 
   return (
-    <div className={styles.page}>
+    <motion.div
+      className={styles.page}
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+    >
       <header className={styles.header}>
-        <button type="button" className={styles.back} onClick={() => navigate('/home')}>
+        <button
+          type="button"
+          className={`${styles.back} pressable`}
+          onClick={() => navigate('/home')}
+        >
           ← {m.readingBack}
         </button>
         <div>
@@ -77,7 +90,7 @@ export function ReadingPage() {
             <button
               key={n}
               type="button"
-              className={`${styles.countBtn} ${cardCount === n ? styles.countBtnActive : ''}`}
+              className={`${styles.countBtn} pressable ${cardCount === n ? styles.countBtnActive : ''}`}
               onClick={() => setCardCount(n)}
               disabled={phase !== 'idle'}
               aria-pressed={cardCount === n}
@@ -89,10 +102,17 @@ export function ReadingPage() {
       </section>
 
       {phase === 'drawing' ? (
-        <div className={styles.loading} role="status" aria-live="polite">
+        <motion.div
+          className={styles.loading}
+          role="status"
+          aria-live="polite"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        >
           <div className={styles.spinner} aria-hidden />
           <p className={styles.loadingText}>{m.loadingShuffle}</p>
-        </div>
+        </motion.div>
       ) : !showResult ? (
         <CardDeck stackSize={cardCount} onDraw={handleDraw} drawLabel={m.drawCards} />
       ) : (
@@ -108,6 +128,6 @@ export function ReadingPage() {
           />
         </>
       )}
-    </div>
+    </motion.div>
   );
 }

@@ -31,7 +31,7 @@ export function HomePage() {
       <div className={styles.footer}>
         <button
           type="button"
-          className={styles.primary}
+          className={`${styles.primary} pressable`}
           disabled={!category}
           onClick={handleContinue}
         >

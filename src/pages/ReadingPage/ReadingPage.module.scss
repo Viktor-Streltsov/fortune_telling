@@ -1,13 +1,16 @@
 @use '../../styles/variables' as *;
 
 .page {
-  min-height: 100dvh;
+  position: relative;
+  z-index: 1;
+  min-height: min(100dvh, 100svh);
   padding: clamp(1rem, 4vw, 2rem);
   max-width: 800px;
   margin-inline: auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: clamp(1rem, 3vw, 1.5rem);
 }
 
 .header {
@@ -18,10 +21,11 @@
 
 .back {
   align-self: flex-start;
-  padding: 0.35rem 0.5rem;
+  min-height: $touch-min;
+  padding: 0.45rem 0.65rem;
   border: none;
   border-radius: 8px;
-  background: rgb(255 255 255 / 6%);
+  background: var(--color-secondary-btn-bg);
   color: $text-muted;
   transition:
     background $transition-fast,
@@ -71,11 +75,12 @@
 }
 
 .countBtn {
-  min-width: 3rem;
-  padding: 0.55rem 0.75rem;
+  min-width: $touch-min;
+  min-height: $touch-min;
+  padding: 0.45rem 0.65rem;
   border-radius: 10px;
-  border: 1px solid rgb(255 255 255 / 12%);
-  background: rgb(20 16 36 / 85%);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
   color: $text-bright;
   font-weight: 600;
   transition:
@@ -85,7 +90,7 @@
 }
 
 .countBtn:hover:not(:disabled) {
-  border-color: rgb(201 166 255 / 35%);
+  border-color: var(--color-border-strong);
 }
 
 .countBtn:disabled {
@@ -94,9 +99,9 @@
 }
 
 .countBtnActive {
-  border-color: rgb(201 166 255 / 55%);
-  box-shadow: 0 0 0 1px rgb(201 166 255 / 25%);
-  background: rgb(40 32 72 / 90%);
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-card);
+  background: var(--color-surface-hover);
 }
 
 .countBtn:focus-visible {

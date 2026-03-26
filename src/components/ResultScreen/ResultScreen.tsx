@@ -24,10 +24,10 @@ export function ResultScreen({
       </h2>
       <pre className={styles.body}>{text}</pre>
       <div className={styles.actions}>
-        <button type="button" className={styles.primary} onClick={onDrawAgain}>
+        <button type="button" className={`${styles.primary} pressable`} onClick={onDrawAgain}>
           {drawAgainLabel}
         </button>
-        <button type="button" className={styles.secondary} onClick={onNewCategory}>
+        <button type="button" className={`${styles.secondary} pressable`} onClick={onNewCategory}>
           {chooseCategoryLabel}
         </button>
       </div>

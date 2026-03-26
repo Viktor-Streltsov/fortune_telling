@@ -22,7 +22,7 @@ export function CardDeck({ stackSize, onDraw, drawLabel }: CardDeckProps) {
           />
         ))}
       </div>
-      <button type="button" className={styles.drawBtn} onClick={onDraw}>
+      <button type="button" className={`${styles.drawBtn} pressable`} onClick={onDraw}>
         {drawLabel}
       </button>
     </div>

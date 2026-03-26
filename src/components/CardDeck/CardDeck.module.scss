@@ -24,6 +24,8 @@
 }
 
 .drawBtn {
+  min-height: $touch-min;
+  min-width: min(100%, 200px);
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 999px;

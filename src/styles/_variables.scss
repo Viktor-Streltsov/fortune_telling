@@ -12,3 +12,20 @@ $radius-inner: 10px;
 $max-content: 560px;
 
 $transition-fast: 0.2s ease;
+
+/* Spacing scale (mobile-first) */
+$space-xxs: 0.35rem;
+$space-xs: 0.5rem;
+$space-sm: 0.75rem;
+$space-md: 1rem;
+$space-lg: 1.5rem;
+$space-xl: 2rem;
+
+/* Typography — fluid where it matters */
+$font-size-caption: clamp(0.72rem, 2.8vw, 0.78rem);
+$font-size-small: clamp(0.85rem, 3.2vw, 0.95rem);
+$font-size-body: clamp(0.92rem, 3.4vw, 1rem);
+$font-size-hero: clamp(1.85rem, 6.5vw, 2.65rem);
+
+/* Touch targets (WCAG-friendly) */
+$touch-min: 44px;

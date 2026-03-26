@@ -26,7 +26,7 @@ export function CategorySelector({ value, onChange }: CategorySelectorProps) {
           <button
             key={item.id}
             type="button"
-            className={`${styles.card} ${active ? styles.cardActive : ''}`}
+            className={`${styles.card} pressable ${active ? styles.cardActive : ''}`}
             onClick={() => onChange(item.id)}
             aria-pressed={active}
           >

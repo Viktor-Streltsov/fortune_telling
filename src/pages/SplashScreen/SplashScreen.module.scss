@@ -1,0 +1,132 @@
+@use '../../styles/variables' as *;
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: max(1.25rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(1.25rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--gradient-body);
+  touch-action: manipulation;
+}
+
+.mist {
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle at 50% 40%, rgb(180 120 255 / 22%), transparent 55%);
+  pointer-events: none;
+  animation: mistDrift 12s ease-in-out infinite;
+}
+
+@keyframes mistDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(2%, -3%) scale(1.05);
+    opacity: 1;
+  }
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgb(230 210 255 / 45%);
+  animation: float 5s ease-in-out infinite;
+  box-shadow: 0 0 10px rgb(200 160 255 / 40%);
+}
+
+@for $i from 1 through 18 {
+  .particle:nth-child(#{$i}) {
+    left: #{6% + $i * 4.8%};
+    top: #{8% + ($i % 7) * 12%};
+    animation-delay: #{$i * 0.12}s;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-18px) scale(1.2);
+    opacity: 0.95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mist,
+  .particle {
+    animation: none;
+  }
+}
+
+.content {
+  position: relative;
+  text-align: center;
+  max-width: 22rem;
+  z-index: 1;
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  font-family: $font-display;
+  font-size: $font-size-hero;
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--color-text);
+  text-shadow: 0 0 40px rgb(180 140 255 / 25%);
+}
+
+.subtitle {
+  margin: 0 0 1rem;
+  font-size: $font-size-body;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--color-text-muted);
+}
+
+.hint {
+  margin: 0;
+  font-size: $font-size-small;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  opacity: 0.85;
+}
+
+.glowOrb {
+  position: absolute;
+  width: min(80vw, 320px);
+  height: min(80vw, 320px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(180 120 255 / 28%), transparent 68%);
+  filter: blur(4px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glowOrb {
+    animation: none !important;
+    opacity: 0.4;
+  }
+}
