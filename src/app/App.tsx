@@ -29,6 +29,8 @@ function AppRoutes() {
       {showMainChrome ? <AppSettingsChrome /> : null}
       <Suspense fallback={<AppFallback />}>
         <Routes>
+          {/* WebView/Capacitor часто открывает /index.html — иначе не матчится / и срабатывает * → /home */}
+          <Route path="/index.html" element={<Navigate to="/" replace />} />
           <Route path="/" element={<RootIndex />} />
           <Route path="/intro" element={<IntroPage />} />
           <Route element={<AnimatedLayout />}>
