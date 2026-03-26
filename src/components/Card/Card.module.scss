@@ -1,0 +1,181 @@
+@use '../../styles/variables' as *;
+
+.root {
+  perspective: 1200px;
+  width: min(100%, 220px);
+  aspect-ratio: 2 / 3.2;
+}
+
+.flipInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform: rotateY(0deg);
+}
+
+.flipInnerVisible {
+  transform: rotateY(180deg);
+}
+
+.faceBack,
+.faceFront {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: $radius-card;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+}
+
+.faceBack {
+  display: grid;
+  place-items: center;
+  background: var(--color-back-face);
+}
+
+.backPattern {
+  position: absolute;
+  inset: 10%;
+  border-radius: $radius-inner;
+  border: 1px solid rgb(255 255 255 / 12%);
+  background:
+    radial-gradient(circle at 30% 20%, rgb(200 170 255 / 15%), transparent 45%),
+    radial-gradient(circle at 70% 80%, rgb(120 200 255 / 10%), transparent 40%);
+}
+
+.backGlyph {
+  position: relative;
+  font-size: clamp(2rem, 8vw, 2.75rem);
+  color: rgb(230 220 255 / 55%);
+  text-shadow: 0 0 24px rgb(180 160 255 / 40%);
+}
+
+.faceFront {
+  transform: rotateY(180deg);
+  padding: 0.75rem;
+}
+
+.frontInner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: $radius-inner;
+  background: rgb(12 10 22 / 75%);
+}
+
+.cardName {
+  margin: 0;
+  font-family: $font-display;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: $text-bright;
+}
+
+.cardMeaning {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: $text-muted;
+  flex: 1;
+  overflow: auto;
+}
+
+/* Card art: CSS-only “illustrations” — swap for assets in RN via imageKey map */
+@mixin art-base {
+  background-size: cover;
+  background-position: center;
+}
+
+.art_star {
+  @include art-base;
+  background-image:
+    radial-gradient(circle at 50% 35%, #fff8e7 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgb(100 180 255 / 35%) 0%, transparent 55%),
+    linear-gradient(165deg, #1a1030 0%, #2d1f55 100%);
+}
+
+.art_moon {
+  @include art-base;
+  background-image:
+    radial-gradient(circle at 55% 40%, rgb(220 230 255 / 90%) 0%, rgb(220 230 255 / 90%) 18%, transparent 19%),
+    radial-gradient(circle at 48% 42%, rgb(30 40 70) 0%, rgb(30 40 70) 22%, transparent 23%),
+    linear-gradient(180deg, #0f1428 0%, #1a2548 100%);
+}
+
+.art_sun {
+  @include art-base;
+  background-image:
+    radial-gradient(circle at 50% 45%, #ffe566 0%, #ffb020 35%, transparent 55%),
+    linear-gradient(180deg, #3a2810 0%, #8a5a18 100%);
+}
+
+.art_tower {
+  @include art-base;
+  background-image:
+    linear-gradient(90deg, transparent 42%, rgb(40 40 55) 42%, rgb(40 40 55) 58%, transparent 58%),
+    linear-gradient(180deg, rgb(255 120 80 / 55%) 0%, transparent 40%),
+    linear-gradient(180deg, #1a1a28 0%, #2a2a3a 100%);
+}
+
+.art_lovers {
+  @include art-base;
+  background-image:
+    radial-gradient(circle at 35% 55%, rgb(255 180 200 / 45%) 0%, transparent 35%),
+    radial-gradient(circle at 65% 55%, rgb(180 210 255 / 40%) 0%, transparent 35%),
+    linear-gradient(180deg, #281828 0%, #3a2040 100%);
+}
+
+.art_hermit {
+  @include art-base;
+  background-image:
+    radial-gradient(circle at 50% 30%, rgb(255 220 160 / 55%) 0%, transparent 40%),
+    linear-gradient(180deg, #121820 0%, #283040 100%);
+}
+
+.art_wheel {
+  @include art-base;
+  background-image:
+    conic-gradient(
+      from 0deg,
+      rgb(255 200 120 / 50%),
+      rgb(120 200 255 / 45%),
+      rgb(200 140 255 / 45%),
+      rgb(255 200 120 / 50%)
+    ),
+    radial-gradient(circle at 50% 50%, #1e1830 55%, transparent 56%),
+    linear-gradient(180deg, #181028 0%, #302050 100%);
+}
+
+.art_strength {
+  @include art-base;
+  background-image:
+    radial-gradient(ellipse at 50% 60%, rgb(255 200 120 / 35%) 0%, transparent 50%),
+    linear-gradient(180deg, #281818 0%, #4a3028 100%);
+}
+
+.art_justice {
+  @include art-base;
+  background-image:
+    linear-gradient(90deg, transparent 48%, rgb(220 220 240 / 70%) 48%, rgb(220 220 240 / 70%) 52%, transparent 52%),
+    linear-gradient(180deg, #181c30 0%, #303450 100%);
+}
+
+.art_world {
+  @include art-base;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgb(120 220 200 / 35%) 0%, transparent 55%),
+    radial-gradient(circle at 50% 50%, transparent 40%, rgb(80 140 255 / 25%) 41%, transparent 42%),
+    linear-gradient(180deg, #101828 0%, #203048 100%);
+}
+
+.art_fallback {
+  @include art-base;
+  background-image: linear-gradient(180deg, #222 0%, #444 100%);
+}

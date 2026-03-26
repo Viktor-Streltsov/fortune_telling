@@ -1,0 +1,54 @@
+@use '../../styles/variables' as *;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.stack {
+  position: relative;
+  width: min(240px, 70vw);
+  aspect-ratio: 2 / 3.2;
+}
+
+.stackCard {
+  position: absolute;
+  inset: 0;
+  border-radius: $radius-card;
+  border: 1px solid var(--color-border);
+  background: var(--color-deck-stack);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.35s ease;
+}
+
+.drawBtn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-btn-on-gradient);
+  background: var(--gradient-btn);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform $transition-fast,
+    filter $transition-fast,
+    opacity $transition-fast;
+}
+
+.drawBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.drawBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.drawBtn:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 3px;
+}

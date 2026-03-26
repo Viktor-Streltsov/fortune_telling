@@ -1,0 +1,74 @@
+@use '../../styles/variables' as *;
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  padding: 0.55rem clamp(0.75rem, 3vw, 1.25rem);
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(10px);
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  min-width: max-content;
+}
+
+.segment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: 10px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.segBtn {
+  padding: 0.35rem 0.55rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: transparent;
+  transition:
+    color $transition-fast,
+    background $transition-fast;
+}
+
+.segBtn:hover {
+  color: var(--color-text);
+}
+
+.segBtnActive {
+  color: var(--color-btn-on-gradient);
+  background: var(--gradient-btn);
+}
+
+.segBtn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 420px) {
+  .bar {
+    justify-content: flex-start;
+  }
+}

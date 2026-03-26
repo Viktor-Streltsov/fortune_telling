@@ -1,0 +1,14 @@
+$font-sans: 'Outfit', system-ui, sans-serif;
+$font-display: 'Cormorant Garamond', Georgia, serif;
+
+/* Theme colors — prefer var(--color-*) from _themes.scss (set on :root) */
+$text-bright: var(--color-text);
+$text-muted: var(--color-text-muted);
+$accent: var(--color-accent);
+$bg-deep: var(--color-bg);
+
+$radius-card: 14px;
+$radius-inner: 10px;
+$max-content: 560px;
+
+$transition-fast: 0.2s ease;

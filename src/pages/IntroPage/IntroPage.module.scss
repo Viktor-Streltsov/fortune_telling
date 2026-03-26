@@ -1,0 +1,96 @@
+@use '../../styles/variables' as *;
+
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 30%, rgb(180 120 255 / 18%), transparent 55%);
+  pointer-events: none;
+  animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.header {
+  position: relative;
+  max-width: 26rem;
+  margin-bottom: 1.75rem;
+}
+
+.kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-family: $font-display;
+  font-size: clamp(1.85rem, 6vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.lead {
+  margin: 0;
+  font-size: 0.98rem;
+  color: $text-muted;
+  line-height: 1.55;
+}
+
+.cta {
+  position: relative;
+  padding: 0.85rem 2.25rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-btn-on-gradient);
+  background: var(--gradient-btn-intro);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform $transition-fast,
+    filter $transition-fast;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+
+.cta:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 3px;
+}
+
+.note {
+  position: relative;
+  margin: 2rem 0 0;
+  max-width: 22rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}

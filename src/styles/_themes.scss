@@ -1,0 +1,88 @@
+/* Theme tokens — use with [data-theme] on :root (set from React). */
+
+:root[data-theme='witch'] {
+  --color-bg: #0e0a18;
+  --color-bg-elevated: rgb(22 16 34 / 92%);
+  --color-text: #f4f0ff;
+  --color-text-muted: rgb(210 200 235 / 78%);
+  --color-accent: #c9a6ff;
+  --color-accent-2: #7dd3c0;
+  --color-border: rgb(255 255 255 / 10%);
+  --color-border-strong: rgb(201 166 255 / 35%);
+  --color-surface: rgb(30 24 48 / 90%);
+  --color-surface-hover: rgb(40 32 72 / 90%);
+  --color-btn-on-gradient: #120a1c;
+  --color-link: #c9a6ff;
+  --color-glow: rgb(120 80 200 / 25%);
+  --color-glow-2: rgb(60 140 200 / 12%);
+  --shadow-card: 0 4px 24px rgb(0 0 0 / 35%);
+  --gradient-body:
+    radial-gradient(ellipse 120% 80% at 50% -20%, var(--color-glow), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 100% 50%, var(--color-glow-2), transparent 45%),
+    var(--color-bg);
+  --gradient-btn: linear-gradient(120deg, #e8d9ff 0%, #c9a6ff 45%, #7dd3c0 100%);
+  --gradient-btn-intro: linear-gradient(120deg, #f2e9ff 0%, #c9a6ff 45%, #7dd3c0 100%);
+  --color-back-face: linear-gradient(145deg, #2a1f45 0%, #151028 50%, #1e1638 100%);
+  --color-deck-stack: linear-gradient(145deg, #2a1f45 0%, #151028 100%);
+  --color-panel-bg: rgb(12 8 22 / 72%);
+  --color-secondary-btn-bg: rgb(255 255 255 / 6%);
+  --color-secondary-btn-border: rgb(255 255 255 / 14%);
+}
+
+:root[data-theme='light'] {
+  --color-bg: #f4f0f8;
+  --color-bg-elevated: rgb(255 255 255 / 92%);
+  --color-text: #1a1224;
+  --color-text-muted: rgb(40 32 55 / 68%);
+  --color-accent: #6b3d8f;
+  --color-accent-2: #2a7d6e;
+  --color-border: rgb(30 20 50 / 12%);
+  --color-border-strong: rgb(107 61 143 / 45%);
+  --color-surface: rgb(255 255 255 / 88%);
+  --color-surface-hover: rgb(248 244 255 / 95%);
+  --color-btn-on-gradient: #1a1224;
+  --color-link: #5a2d7a;
+  --color-glow: rgb(140 100 200 / 12%);
+  --color-glow-2: rgb(80 160 200 / 10%);
+  --shadow-card: 0 4px 20px rgb(40 30 60 / 12%);
+  --gradient-body:
+    radial-gradient(ellipse 100% 70% at 50% 0%, var(--color-glow), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 30%, var(--color-glow-2), transparent 50%),
+    var(--color-bg);
+  --gradient-btn: linear-gradient(120deg, #ede4ff 0%, #c4a8e8 45%, #8fd4c8 100%);
+  --gradient-btn-intro: linear-gradient(120deg, #f5f0ff 0%, #d4c4f0 45%, #a8ddd0 100%);
+  --color-back-face: linear-gradient(145deg, #e8e0f4 0%, #d4c8e8 50%, #c8b8dc 100%);
+  --color-deck-stack: linear-gradient(145deg, #e0d6f0 0%, #d0c4e4 100%);
+  --color-panel-bg: rgb(255 255 255 / 88%);
+  --color-secondary-btn-bg: rgb(30 20 50 / 6%);
+  --color-secondary-btn-border: rgb(30 20 50 / 12%);
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #0c0d12;
+  --color-bg-elevated: rgb(18 20 28 / 94%);
+  --color-text: #e8eaef;
+  --color-text-muted: rgb(180 190 205 / 62%);
+  --color-accent: #8ab4ff;
+  --color-accent-2: #b4a3e8;
+  --color-border: rgb(255 255 255 / 8%);
+  --color-border-strong: rgb(138 180 255 / 38%);
+  --color-surface: rgb(24 26 36 / 95%);
+  --color-surface-hover: rgb(34 38 52 / 95%);
+  --color-btn-on-gradient: #0a0c12;
+  --color-link: #9ec0ff;
+  --color-glow: rgb(60 100 200 / 18%);
+  --color-glow-2: rgb(100 80 180 / 10%);
+  --shadow-card: 0 4px 24px rgb(0 0 0 / 45%);
+  --gradient-body:
+    radial-gradient(ellipse 100% 60% at 50% -15%, var(--color-glow), transparent 52%),
+    radial-gradient(ellipse 70% 50% at 90% 40%, var(--color-glow-2), transparent 48%),
+    var(--color-bg);
+  --gradient-btn: linear-gradient(120deg, #c8d8ff 0%, #8ab4ff 48%, #a8c8c0 100%);
+  --gradient-btn-intro: linear-gradient(120deg, #dce6ff 0%, #9ec0ff 48%, #b8d8d0 100%);
+  --color-back-face: linear-gradient(145deg, #1c2030 0%, #12141c 50%, #181c28 100%);
+  --color-deck-stack: linear-gradient(145deg, #242838 0%, #161820 100%);
+  --color-panel-bg: rgb(14 16 24 / 82%);
+  --color-secondary-btn-bg: rgb(255 255 255 / 6%);
+  --color-secondary-btn-border: rgb(255 255 255 / 12%);
+}

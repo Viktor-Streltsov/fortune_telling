@@ -1,0 +1,76 @@
+@use '../../styles/variables' as *;
+
+.root {
+  width: 100%;
+  max-width: $max-content;
+  margin-inline: auto;
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-family: $font-display;
+  font-size: clamp(1.35rem, 4vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.body {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  font-family: $font-sans;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  color: $text-muted;
+  background: var(--color-panel-bg);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+
+  @media (min-width: 420px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.primary,
+.secondary {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition:
+    transform $transition-fast,
+    background $transition-fast,
+    border-color $transition-fast;
+}
+
+.primary {
+  color: var(--color-btn-on-gradient);
+  background: var(--gradient-btn);
+}
+
+.secondary {
+  color: $text-bright;
+  background: var(--color-secondary-btn-bg);
+  border-color: var(--color-secondary-btn-border);
+}
+
+.primary:hover,
+.secondary:hover {
+  transform: translateY(-1px);
+}
+
+.primary:focus-visible,
+.secondary:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 2px;
+}

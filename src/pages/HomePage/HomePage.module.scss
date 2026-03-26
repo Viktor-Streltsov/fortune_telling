@@ -1,0 +1,62 @@
+@use '../../styles/variables' as *;
+
+.page {
+  min-height: 100dvh;
+  padding: clamp(1rem, 4vw, 2rem);
+  max-width: 720px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.header {
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  margin: 0 0 0.35rem;
+  font-family: $font-display;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-weight: 600;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.92rem;
+  color: $text-muted;
+  line-height: 1.45;
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.primary {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  color: var(--color-btn-on-gradient);
+  background: var(--gradient-btn);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform $transition-fast,
+    opacity $transition-fast;
+}
+
+.primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.primary:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 2px;
+}
