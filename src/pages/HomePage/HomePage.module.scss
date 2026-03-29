@@ -30,37 +30,3 @@
   color: $text-muted;
   line-height: 1.45;
 }
-
-.footer {
-  margin-top: auto;
-  padding-top: 0.5rem;
-}
-
-.primary {
-  width: 100%;
-  min-height: $touch-min;
-  padding: 0.85rem 1rem;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  color: var(--color-btn-on-gradient);
-  background: var(--gradient-btn);
-  box-shadow: var(--shadow-card);
-  transition:
-    transform $transition-fast,
-    opacity $transition-fast;
-}
-
-.primary:hover:not(:disabled) {
-  transform: translateY(-1px);
-}
-
-.primary:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.primary:focus-visible {
-  outline: 2px solid $accent;
-  outline-offset: 2px;
-}

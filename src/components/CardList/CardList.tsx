@@ -19,7 +19,7 @@ export function CardList({ cards, revealed }: CardListProps) {
       show: {
         opacity: 1,
         transition: reduce
-          ? { duration: 0 } : { staggerChildren: 0.1, delayChildren: 0.06 },
+          ? { duration: 0 } : { staggerChildren: 0.14, delayChildren: 0.08 },
       },
     };
 
@@ -51,7 +51,7 @@ export function CardList({ cards, revealed }: CardListProps) {
             imageKey={card.imageKey}
             meaning={card.activeMeaning}
             revealed={revealed}
-            flipDelayMs={index * 140}
+            flipDelayMs={index * 175}
           />
         </motion.li>
       ))}

@@ -2,10 +2,6 @@ import type { FortuneCard } from '@/shared/types';
 
 const L = (en: string, ru: string) => ({ en, ru });
 
-/**
- * Card deck: meanings vary by reading category and locale.
- * `imageKey` maps to visuals in `Card.module.scss` (portable to RN/Capacitor).
- */
 export const CARDS: FortuneCard[] = [
   {
     id: 'star',

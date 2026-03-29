@@ -22,15 +22,28 @@
   border-radius: 12px;
   background: var(--color-surface);
   color: $text-bright;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
   transition:
     border-color $transition-fast,
     transform $transition-fast,
-    box-shadow $transition-fast;
+    box-shadow $transition-fast,
+    background $transition-fast;
 }
 
-.card:hover {
+@media (hover: hover) {
+  .card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-card);
+    background: var(--color-surface-hover);
+  }
+}
+
+.card:active {
+  background: var(--color-surface-hover);
   border-color: var(--color-border-strong);
-  transform: translateY(-1px);
 }
 
 .card:focus-visible {
@@ -41,6 +54,14 @@
 .cardActive {
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @media (hover: hover) {
+    .card:hover {
+      transform: none;
+    }
+  }
 }
 
 .label {

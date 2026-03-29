@@ -12,12 +12,8 @@ export function HomePage() {
   const m = t(locale);
   const { category, setCategory } = useFortune();
 
-  const handleCategory = (id: CategoryId) => {
+  const handleSelectSpread = (id: CategoryId) => {
     setCategory(id);
-  };
-
-  const handleContinue = () => {
-    if (!category) return;
     navigate('/reading');
   };
 
@@ -27,17 +23,7 @@ export function HomePage() {
         <h1 className={styles.title}>{m.homeTitle}</h1>
         <p className={styles.subtitle}>{m.homeSubtitle}</p>
       </header>
-      <CategorySelector value={category} onChange={handleCategory} />
-      <div className={styles.footer}>
-        <button
-          type="button"
-          className={`${styles.primary} pressable`}
-          disabled={!category}
-          onClick={handleContinue}
-        >
-          {m.homeContinue}
-        </button>
-      </div>
+      <CategorySelector value={category} onSelect={handleSelectSpread} />
     </div>
   );
 }

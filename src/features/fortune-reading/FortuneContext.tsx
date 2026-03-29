@@ -15,20 +15,18 @@ import {
   type FortuneState,
 } from '@/features/fortune-reading/fortuneReducer';
 import { useSettings } from '@/shared/contexts/SettingsContext';
-import { scheduleTimeout } from '@/shared/lib/schedule';
 import type { CategoryId } from '@/shared/types';
 
 type FortuneContextValue = FortuneState & {
   setCategory: (c: CategoryId) => void;
   setCardCount: (n: 1 | 2 | 3) => void;
-  drawCards: () => void;
+  /** Draws random cards for the current `cardCount` and reveals the reading (no extra delay). */
+  revealRandomDraw: () => void;
   resetReading: () => void;
   clearCategory: () => void;
 };
 
 const FortuneContext = createContext<FortuneContextValue | null>(null);
-
-const DRAW_DELAY_MS = 900;
 
 export function FortuneProvider({ children }: { children: ReactNode }) {
   const { locale } = useSettings();
@@ -52,17 +50,13 @@ export function FortuneProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'SET_CARD_COUNT', payload: n });
   }, []);
 
-  const drawCards = useCallback(() => {
-    if (!state.category) return;
-    const gen = ++drawGen.current;
-    dispatch({ type: 'DRAW_START' });
+  const revealRandomDraw = useCallback(() => {
+    if (!state.category || state.phase !== 'idle') return;
     const count = state.cardCount;
-    scheduleTimeout(() => {
-      if (gen !== drawGen.current) return;
-      const cards = drawRandomCards(count);
-      dispatch({ type: 'DRAW_COMPLETE', payload: { cards, locale } });
-    }, DRAW_DELAY_MS);
-  }, [state.category, state.cardCount, locale]);
+    const cards = drawRandomCards(count);
+    drawGen.current += 1;
+    dispatch({ type: 'DRAW_COMPLETE', payload: { cards, locale } });
+  }, [state.category, state.phase, state.cardCount, locale]);
 
   const resetReading = useCallback(() => {
     dispatch({ type: 'RESET_READING' });
@@ -77,11 +71,11 @@ export function FortuneProvider({ children }: { children: ReactNode }) {
       ...state,
       setCategory,
       setCardCount,
-      drawCards,
+      revealRandomDraw,
       resetReading,
       clearCategory,
     }),
-    [state, setCategory, setCardCount, drawCards, resetReading, clearCategory]
+    [state, setCategory, setCardCount, revealRandomDraw, resetReading, clearCategory]
   );
 
   return <FortuneContext.Provider value={value}>{children}</FortuneContext.Provider>;

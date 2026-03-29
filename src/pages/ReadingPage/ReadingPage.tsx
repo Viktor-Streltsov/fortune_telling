@@ -1,15 +1,19 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
-import { CardDeck } from '@/components/CardDeck/CardDeck';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { CardList } from '@/components/CardList/CardList';
 import { ResultScreen } from '@/components/ResultScreen/ResultScreen';
+import { ShuffleDeck } from '@/components/ShuffleDeck/ShuffleDeck';
 import { useFortune } from '@/features/fortune-reading/FortuneContext';
 import { useSettings } from '@/shared/contexts/SettingsContext';
 import { useDrawSound } from '@/shared/hooks/useDrawSound';
 import { hapticLight } from '@/shared/native/haptics';
 import { t } from '@/shared/i18n/messages';
 import styles from './ReadingPage.module.scss';
+
+const SHUFFLE_MS = 1600;
+
+type FlowStep = 'chooseCount' | 'shuffling';
 
 export function ReadingPage() {
   const navigate = useNavigate();
@@ -20,19 +24,28 @@ export function ReadingPage() {
   const fortune = useFortune();
   const {
     category,
-    cardCount,
-    setCardCount,
     phase,
     drawn,
     interpretation,
-    drawCards,
+    setCardCount,
+    revealRandomDraw,
     resetReading,
     clearCategory,
   } = fortune;
 
+  const [flowStep, setFlowStep] = useState<FlowStep>('chooseCount');
+
   useEffect(() => {
     if (!category) navigate('/home', { replace: true });
   }, [category, navigate]);
+
+  useEffect(() => {
+    if (flowStep !== 'shuffling') return;
+    const id = globalThis.setTimeout(() => {
+      revealRandomDraw();
+    }, SHUFFLE_MS);
+    return () => globalThis.clearTimeout(id);
+  }, [flowStep, revealRandomDraw]);
 
   if (!category) return null;
 
@@ -47,20 +60,29 @@ export function ReadingPage() {
 
   const showResult = phase === 'revealed' && drawn.length > 0;
 
-  const handleDraw = () => {
-    play();
-    void hapticLight();
-    drawCards();
-  };
+  const handleCount = useCallback(
+    (n: 1 | 2 | 3) => {
+      setCardCount(n);
+      play();
+      void hapticLight();
+      setFlowStep('shuffling');
+    },
+    [play, setCardCount]
+  );
 
   const handleDrawAgain = () => {
     resetReading();
+    setFlowStep('chooseCount');
   };
 
   const handleNewCategory = () => {
     clearCategory();
     navigate('/home');
   };
+
+  const stepTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <motion.div
@@ -77,57 +99,93 @@ export function ReadingPage() {
         >
           ← {m.readingBack}
         </button>
-        <div>
-          <h1 className={styles.title}>{m.readingTitle(topicLabel)}</h1>
-          <p className={styles.subtitle}>{m.readingSubtitle}</p>
-        </div>
+        {!showResult && flowStep === 'chooseCount' ? (
+          <div className={styles.titleBlock}>
+            <h1 className={styles.mainTitle}>{m.chooseCountTitle}</h1>
+            <p className={styles.topicLine}>{m.readingTitle(topicLabel)}</p>
+          </div>
+        ) : !showResult && flowStep === 'shuffling' ? (
+          <div className={styles.titleBlock}>
+            <p className={styles.topicLine}>{m.readingTitle(topicLabel)}</p>
+          </div>
+        ) : null}
       </header>
 
-      <section className={styles.countSection} aria-label={m.cardsLabel}>
-        <span className={styles.countLabel}>{m.cardsLabel}</span>
-        <div className={styles.countRow}>
-          {([1, 2, 3] as const).map((n) => (
-            <button
-              key={n}
-              type="button"
-              className={`${styles.countBtn} pressable ${cardCount === n ? styles.countBtnActive : ''}`}
-              onClick={() => setCardCount(n)}
-              disabled={phase !== 'idle'}
-              aria-pressed={cardCount === n}
-            >
-              {n}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {phase === 'drawing' ? (
-        <motion.div
-          className={styles.loading}
-          role="status"
-          aria-live="polite"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className={styles.spinner} aria-hidden />
-          <p className={styles.loadingText}>{m.loadingShuffle}</p>
-        </motion.div>
-      ) : !showResult ? (
-        <CardDeck stackSize={cardCount} onDraw={handleDraw} drawLabel={m.drawCards} />
-      ) : (
-        <>
-          <CardList cards={drawn} revealed />
-          <ResultScreen
-            title={m.resultTitle}
-            text={interpretation}
-            onDrawAgain={handleDrawAgain}
-            onNewCategory={handleNewCategory}
-            drawAgainLabel={m.drawAgain}
-            chooseCategoryLabel={m.chooseCategory}
-          />
-        </>
-      )}
+      <AnimatePresence mode="wait">
+        {showResult ? (
+          <motion.div
+            key="result"
+            className={styles.resultBlock}
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={stepTransition}
+          >
+            <CardList cards={drawn} revealed />
+            <ResultScreen
+              title={m.resultTitle}
+              text={interpretation}
+              onDrawAgain={handleDrawAgain}
+              onNewCategory={handleNewCategory}
+              drawAgainLabel={m.drawAgain}
+              chooseCategoryLabel={m.chooseCategory}
+            />
+          </motion.div>
+        ) : flowStep === 'chooseCount' ? (
+          <motion.section
+            key="count"
+            className={styles.countStage}
+            role="group"
+            aria-label={m.chooseCountGroup}
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+            transition={stepTransition}
+          >
+            <div className={styles.countGrid}>
+              <button
+                type="button"
+                className={`${styles.countCard} pressable`}
+                onClick={() => handleCount(1)}
+              >
+                <span className={styles.countNum}>1</span>
+                <span className={styles.countLabel}>{m.countOneCard}</span>
+              </button>
+              <button
+                type="button"
+                className={`${styles.countCard} pressable`}
+                onClick={() => handleCount(2)}
+              >
+                <span className={styles.countNum}>2</span>
+                <span className={styles.countLabel}>{m.countTwoCards}</span>
+              </button>
+              <button
+                type="button"
+                className={`${styles.countCard} pressable`}
+                onClick={() => handleCount(3)}
+              >
+                <span className={styles.countNum}>3</span>
+                <span className={styles.countLabel}>{m.countThreeCards}</span>
+              </button>
+            </div>
+          </motion.section>
+        ) : (
+          <motion.section
+            key="shuffle"
+            className={styles.shuffleStage}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0 }}
+            transition={stepTransition}
+            aria-busy="true"
+          >
+            <ShuffleDeck animate={!reduceMotion} />
+            <p className={styles.shuffleText} role="status" aria-live="polite">
+              {m.loadingShuffle}
+            </p>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

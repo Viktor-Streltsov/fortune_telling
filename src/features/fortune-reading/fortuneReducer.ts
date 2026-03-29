@@ -34,7 +34,14 @@ function toDrawn(card: FortuneCard, category: CategoryId, locale: Locale): Drawn
 export function fortuneReducer(state: FortuneState, action: FortuneAction): FortuneState {
   switch (action.type) {
     case 'SET_CATEGORY':
-      return { ...state, category: action.payload, drawn: [], interpretation: '', phase: 'idle' };
+      return {
+        ...state,
+        category: action.payload,
+        cardCount: 1,
+        drawn: [],
+        interpretation: '',
+        phase: 'idle',
+      };
     case 'SET_CARD_COUNT':
       return { ...state, cardCount: action.payload, drawn: [], interpretation: '', phase: 'idle' };
     case 'DRAW_START':

@@ -5,10 +5,11 @@ import styles from './CategorySelector.module.scss';
 
 export type CategorySelectorProps = {
   value: CategoryId | null;
-  onChange: (id: CategoryId) => void;
+  /** Invoked when the user chooses a spread; typically sets category and navigates to the reading screen. */
+  onSelect: (id: CategoryId) => void;
 };
 
-export function CategorySelector({ value, onChange }: CategorySelectorProps) {
+export function CategorySelector({ value, onSelect }: CategorySelectorProps) {
   const { locale } = useSettings();
   const m = t(locale);
   const items = [
@@ -27,7 +28,7 @@ export function CategorySelector({ value, onChange }: CategorySelectorProps) {
             key={item.id}
             type="button"
             className={`${styles.card} pressable ${active ? styles.cardActive : ''}`}
-            onClick={() => onChange(item.id)}
+            onClick={() => onSelect(item.id)}
             aria-pressed={active}
           >
             <span className={styles.label}>{item.label}</span>
